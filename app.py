@@ -27,3 +27,8 @@ if __name__ == "__main__":
     print(f"  7 - 4 = {subtract(7, 4)}")
     print(f"  3 * 5 = {multiply(3, 5)}")
     print(f" 10 / 2 = {divide(10, 2)}")
+
+
+def power(a: float, b: float) -> float:
+    """Added only in release/1.0"""
+    return a ** b
