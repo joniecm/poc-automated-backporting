@@ -14,42 +14,13 @@ Proof-of-concept for automated backporting of merged pull requests to release br
 
 ## Labels
 
-| Label | Target Branch |
-|---|---|
+| Label                | Target Branch |
+| -------------------- | ------------- |
 | `target:release/1.0` | `release/1.0` |
 | `target:release/2.0` | `release/2.0` |
 | `target:release/3.0` | `release/3.0` |
 
 You can target multiple branches by adding multiple labels to a single PR.
-
-## Setup
-
-### Prerequisites
-
-- [GitHub CLI](https://cli.github.com/) (`gh`) installed and authenticated
-- Git remote `origin` pointing to this repo on GitHub
-
-### Steps
-
-```bash
-# 1. Clone and push the initial commit to GitHub
-git init
-git add .
-git commit -m "Initial commit"
-gh repo create poc-automated-backporting --public --source=. --push
-
-# 2. Run the setup script (creates branches, labels, enables auto-merge)
-bash setup.sh
-```
-
-The setup script will:
-- Create release branches (`release/1.0`, `release/2.0`, `release/3.0`) with diverged history
-- Create the `target:release/*` labels on GitHub
-- Enable auto-merge on the repository
-
-### Manual Step
-
-Verify that **"Allow auto-merge"** is enabled in **Settings → General → Pull Requests**. The setup script attempts to enable it, but it requires admin access.
 
 ## Testing
 
@@ -78,13 +49,13 @@ Verify that **"Allow auto-merge"** is enabled in **Settings → General → Pull
 
 The workflow is defined in [`.github/workflows/backport.yml`](.github/workflows/backport.yml) with these key settings:
 
-| Input | Value | Purpose |
-|---|---|---|
-| `label_pattern` | `^target:([^ ]+)$` | Match `target:<branch>` labels |
-| `auto_merge_enabled` | `true` | Auto-merge clean backports |
-| `auto_merge_method` | `squash` | Squash-merge into release branch |
-| `conflict_resolution` | `draft_commit_conflicts` | Draft PR with conflicts on failure |
-| `merge_commits` | `skip` | Skip merge commits during cherry-pick |
+| Input                 | Value                    | Purpose                               |
+| --------------------- | ------------------------ | ------------------------------------- |
+| `label_pattern`       | `^target:([^ ]+)$`       | Match `target:<branch>` labels        |
+| `auto_merge_enabled`  | `true`                   | Auto-merge clean backports            |
+| `auto_merge_method`   | `squash`                 | Squash-merge into release branch      |
+| `conflict_resolution` | `draft_commit_conflicts` | Draft PR with conflicts on failure    |
+| `merge_commits`       | `skip`                   | Skip merge commits during cherry-pick |
 
 ## Notes
 
