@@ -1,5 +1,8 @@
 name: CI
 on:
+  push:
+    branches:
+      - "backport-*"
   pull_request:
     branches:
       - "release/*"
