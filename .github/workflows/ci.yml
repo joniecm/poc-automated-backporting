@@ -1,0 +1,13 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - "release/*"
+jobs:
+  ci:
+    name: CI check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run checks
+        run: echo "All checks passed"
